@@ -1,8 +1,8 @@
 version: '3.4'
 
-volumes:
-  kong-datastore:
-  keycloak-datastore:
+# volumes:
+#   kong-datastore:
+#   keycloak-datastore:
 
 services:
   kong:
@@ -18,8 +18,8 @@ services:
   kong-db:
     image: postgres:11-alpine
     volumes:
-      # - ./.dockerdata/kong-datastore:/var/lib/postgresql/data
-      - kong-datastore:/var/lib/postgresql/data
+      - ./.dockerdata/kong-datastore:/var/lib/postgresql/data
+      # - kong-datastore:/var/lib/postgresql/data
     environment:
       POSTGRES_DB:       api-gw
       POSTGRES_USER:     kong
@@ -44,8 +44,8 @@ services:
   keycloak-db:
     image: postgres:11-alpine
     volumes: 
-      - keycloak-datastore:/var/lib/postgresql/data
-      # - - ./.dockerdata/keycloak-db:/var/lib/postgresql/data
+      # - keycloak-datastore:/var/lib/postgresql/data
+      - ./.dockerdata/keycloak-db:/var/lib/postgresql/data
     ports:
       - "25432:5432"
     environment:
