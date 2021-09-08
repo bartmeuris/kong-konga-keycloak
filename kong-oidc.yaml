@@ -1,0 +1,31 @@
+_format_version: "2.1"
+_transform: true
+# Set transform to false if including already encrypted credentials to prevent double encryption
+
+services:
+- name: mock-service
+  protocol: http
+  host: mockbin.org
+  port: 80
+  path: /request
+  retries: 5
+  # url: https://example.com
+  routes:
+  - name: mock-service
+    paths:
+    - /mock
+
+plugins:
+- name: oidc
+  config:
+    client_id: kong
+    client_secret: 02432bc5-0802-49de-9c03-b9b84301859f
+    realm: experimental
+    introspection_endpoint: http://keycloak:8080/auth/realms/experimental/protocol/openid-connect/token/introspect
+    discovery: http://keycloak:8080/auth/realms/experimental/.well-known/openid-configuration
+    bearer_only: "no"
+    ssl_verify: "no"
+    logout_path: /logout
+    redirect_uri_path: /
+    scope: openid
+    response_type: code
